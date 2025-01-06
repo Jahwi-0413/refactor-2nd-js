@@ -13,6 +13,7 @@ function statement(invoice, plays) {
     performances: invoice.performances.map(enrichPerformace),
   };
   statementData.totalAmount = totalAmount(statementData);
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 
   return renderPlainText(statementData, plays);
 
@@ -74,6 +75,15 @@ function statement(invoice, plays) {
     }
     return result;
   }
+
+  // statement() 함수...
+  function totalVolumeCredits(data) {
+    let volumeCredits = 0;
+    for (let perf of data.performances) {
+      volumeCredits += perf.volumeCredits;
+    }
+    return volumeCredits;
+  }
 }
 
 function renderPlainText(data, plays) {
@@ -85,17 +95,8 @@ function renderPlainText(data, plays) {
   }
 
   result += `총액: ${usd(data.totalAmount)}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+  result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
   return result;
-
-  // renderPlainText() 함수...
-  function totalVolumeCredits() {
-    let volumeCredits = 0;
-    for (let perf of data.performances) {
-      volumeCredits += perf.volumeCredits;
-    }
-    return volumeCredits;
-  }
 }
 
 module.exports = { statement };
