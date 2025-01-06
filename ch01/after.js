@@ -12,6 +12,8 @@ function statement(invoice, plays) {
     customer: invoice.customer,
     performances: invoice.performances.map(enrichPerformace),
   };
+  statementData.totalAmount = totalAmount(statementData);
+
   return renderPlainText(statementData, plays);
 
   // statement() 함수...
@@ -63,6 +65,15 @@ function statement(invoice, plays) {
 
     return result;
   }
+
+  // statement() 함수...
+  function totalAmount(data) {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.amount;
+    }
+    return result;
+  }
 }
 
 function renderPlainText(data, plays) {
@@ -73,7 +84,7 @@ function renderPlainText(data, plays) {
     result += `  ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
   }
 
-  result += `총액: ${usd(totalAmount())}\n`;
+  result += `총액: ${usd(data.totalAmount)}\n`;
   result += `적립 포인트: ${totalVolumeCredits()}점\n`;
   return result;
 
@@ -84,15 +95,6 @@ function renderPlainText(data, plays) {
       volumeCredits += perf.volumeCredits;
     }
     return volumeCredits;
-  }
-
-  // renderPlainText() 함수...
-  function totalAmount() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-    return result;
   }
 }
 
