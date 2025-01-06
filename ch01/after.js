@@ -58,7 +58,6 @@ function statement(invoice, plays) {
     return volumeCredits;
   }
 
-  let totalAmount = 0;
   let result = `청구 내역 (고객명): ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
@@ -68,6 +67,7 @@ function statement(invoice, plays) {
     }석)\n`;
   }
 
+  let totalAmount = 0;
   for (let perf of invoice.performances) {
     totalAmount += amountFor(perf);
   }
