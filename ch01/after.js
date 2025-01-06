@@ -29,13 +29,13 @@ function statement(invoice, plays) {
   }
 
   // statement() 함수...
-  function volumeCreditsFor(perf) {
+  function volumeCreditsFor(aPerformance) {
     let result = 0;
     // 포인트를 정립한다.
-    result += Math.max(perf.audience - 30, 0);
+    result += Math.max(aPerformance.audience - 30, 0);
     // 희극 관객 5명마다 추가 포인트를 제공한다.
-    if ("comedy" === playFor(perf).type)
-      result += Math.floor(perf.audience / 5);
+    if ("comedy" === playFor(aPerformance).type)
+      result += Math.floor(aPerformance.audience / 5);
 
     return result;
   }
