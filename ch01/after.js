@@ -10,9 +10,15 @@ function usd(aNumber) {
 function statement(invoice, plays) {
   const statementData = {
     customer: invoice.customer,
-    performances: invoice.performances,
+    performances: invoice.performances.map(enrichPerformace),
   };
   return renderPlainText(statementData, plays);
+
+  // statement() 함수...
+  function enrichPerformace(aPerformance) {
+    const result = Object.assign({}, aPerformance); //얕은 복사
+    return result;
+  }
 }
 
 function renderPlainText(data, plays) {
