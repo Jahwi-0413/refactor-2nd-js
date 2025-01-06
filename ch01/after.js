@@ -23,6 +23,10 @@ function statement(invoice, plays) {
     return result;
   }
 
+  function playFor(perf) {
+    return plays[perf.playID];
+  }
+
   let totalAmount = 0;
   let volumeCredits = 0;
   let result = `청구 내역 (고객명): ${invoice.customer}\n`;
@@ -33,7 +37,7 @@ function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+    const play = playFor(perf);
     let thisAmount = amountFor(perf, play);
 
     // 포인트를 정립한다.
