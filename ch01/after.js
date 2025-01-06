@@ -8,7 +8,24 @@ function usd(aNumber) {
 }
 
 function statement(invoice, plays) {
-  // statement() 함수... 연극의 가격을 계산한다.
+  return renderPlainText(invoice, plays);
+}
+
+function renderPlainText(invoice, plays) {
+  let result = `청구 내역 (고객명): ${invoice.customer}\n`;
+
+  for (let perf of invoice.performances) {
+    // 청구 내역을 출력한다.
+    result += `  ${playFor(perf).name}: ${usd(amountFor(perf))} (${
+      perf.audience
+    }석)\n`;
+  }
+
+  result += `총액: ${usd(totalAmount())}\n`;
+  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+  return result;
+
+  // renderPlainText() 함수... 연극의 가격을 계산한다.
   function amountFor(aPerformance) {
     let result = 0;
 
@@ -32,12 +49,12 @@ function statement(invoice, plays) {
     return result;
   }
 
-  // statement() 함수...
+  // renderPlainText() 함수...
   function playFor(perf) {
     return plays[perf.playID];
   }
 
-  // statement() 함수...
+  // renderPlainText() 함수...
   function volumeCreditsFor(aPerformance) {
     let result = 0;
     // 포인트를 정립한다.
@@ -49,7 +66,7 @@ function statement(invoice, plays) {
     return result;
   }
 
-  // statement() 함수...
+  // renderPlainText() 함수...
   function totalVolumeCredits() {
     let volumeCredits = 0;
     for (let perf of invoice.performances) {
@@ -58,7 +75,7 @@ function statement(invoice, plays) {
     return volumeCredits;
   }
 
-  // statement() 함수...
+  // renderPlainText() 함수...
   function totalAmount() {
     let result = 0;
     for (let perf of invoice.performances) {
@@ -66,19 +83,6 @@ function statement(invoice, plays) {
     }
     return result;
   }
-
-  let result = `청구 내역 (고객명): ${invoice.customer}\n`;
-
-  for (let perf of invoice.performances) {
-    // 청구 내역을 출력한다.
-    result += `  ${playFor(perf).name}: ${usd(amountFor(perf))} (${
-      perf.audience
-    }석)\n`;
-  }
-
-  result += `총액: ${usd(totalAmount())}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
-  return result;
 }
 
 module.exports = { statement };
