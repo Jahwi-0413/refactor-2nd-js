@@ -8,14 +8,17 @@ function usd(aNumber) {
 }
 
 function statement(invoice, plays) {
-  const statementData = { customer: invoice.customer };
+  const statementData = {
+    customer: invoice.customer,
+    performances: invoice.performances,
+  };
   return renderPlainText(statementData, invoice, plays);
 }
 
 function renderPlainText(data, invoice, plays) {
   let result = `청구 내역 (고객명): ${data.customer}\n`;
 
-  for (let perf of invoice.performances) {
+  for (let perf of data.performances) {
     // 청구 내역을 출력한다.
     result += `  ${playFor(perf).name}: ${usd(amountFor(perf))} (${
       perf.audience
@@ -70,7 +73,7 @@ function renderPlainText(data, invoice, plays) {
   // renderPlainText() 함수...
   function totalVolumeCredits() {
     let volumeCredits = 0;
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       volumeCredits += volumeCreditsFor(perf);
     }
     return volumeCredits;
@@ -79,7 +82,7 @@ function renderPlainText(data, invoice, plays) {
   // renderPlainText() 함수...
   function totalAmount() {
     let result = 0;
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += amountFor(perf);
     }
     return result;
