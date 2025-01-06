@@ -12,10 +12,10 @@ function statement(invoice, plays) {
     customer: invoice.customer,
     performances: invoice.performances,
   };
-  return renderPlainText(statementData, invoice, plays);
+  return renderPlainText(statementData, plays);
 }
 
-function renderPlainText(data, invoice, plays) {
+function renderPlainText(data, plays) {
   let result = `청구 내역 (고객명): ${data.customer}\n`;
 
   for (let perf of data.performances) {
