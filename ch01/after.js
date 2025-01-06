@@ -8,16 +8,18 @@ function usd(aNumber) {
 }
 
 function statement(invoice, plays) {
+  return renderPlainText(createStatementData(invoice, plays), plays);
+}
+
+function createStatementData(invoice, plays) {
   const statementData = {
     customer: invoice.customer,
     performances: invoice.performances.map(enrichPerformace),
   };
   statementData.totalAmount = totalAmount(statementData);
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
+  return statementData;
 
-  return renderPlainText(statementData, plays);
-
-  // statement() 함수...
   function enrichPerformace(aPerformance) {
     const result = Object.assign({}, aPerformance); //얕은 복사
     result.play = playFor(result);
@@ -26,12 +28,10 @@ function statement(invoice, plays) {
     return result;
   }
 
-  // statement() 함수...
   function playFor(perf) {
     return plays[perf.playID];
   }
 
-  // statement() 함수...
   function amountFor(aPerformance) {
     let result = 0;
 
@@ -55,7 +55,6 @@ function statement(invoice, plays) {
     return result;
   }
 
-  // statement() 함수...
   function volumeCreditsFor(aPerformance) {
     let result = 0;
     // 포인트를 정립한다.
@@ -67,12 +66,10 @@ function statement(invoice, plays) {
     return result;
   }
 
-  // statement() 함수...
   function totalAmount(data) {
     return data.performances.reduce((total, p) => total + p.amount, 0);
   }
 
-  // statement() 함수...
   function totalVolumeCredits(data) {
     return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
   }
