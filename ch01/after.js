@@ -58,6 +58,15 @@ function statement(invoice, plays) {
     return volumeCredits;
   }
 
+  // statement() 함수...
+  function appleSauce() {
+    let totalAmount = 0;
+    for (let perf of invoice.performances) {
+      totalAmount += amountFor(perf);
+    }
+    return totalAmount;
+  }
+
   let result = `청구 내역 (고객명): ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
@@ -67,10 +76,7 @@ function statement(invoice, plays) {
     }석)\n`;
   }
 
-  let totalAmount = 0;
-  for (let perf of invoice.performances) {
-    totalAmount += amountFor(perf);
-  }
+  let totalAmount = appleSauce();
 
   result += `총액: ${usd(totalAmount)}\n`;
   result += `적립 포인트: ${totalVolumeCredits()}점\n`;
