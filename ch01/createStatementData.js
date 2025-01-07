@@ -14,7 +14,7 @@ function createStatementData(invoice, plays) {
     );
     const result = Object.assign({}, aPerformance); //얕은 복사
     result.play = calculator.play;
-    result.amount = amountFor(result);
+    result.amount = calculator.amount;
     result.volumeCredits = volumeCreditsFor(result);
     return result;
   }
