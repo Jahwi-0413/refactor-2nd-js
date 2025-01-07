@@ -15,22 +15,12 @@ function createStatementData(invoice, plays) {
     const result = Object.assign({}, aPerformance); //얕은 복사
     result.play = calculator.play;
     result.amount = calculator.amount;
-    result.volumeCredits = volumeCreditsFor(result);
+    result.volumeCredits = calculator.volumeCredits;
     return result;
   }
 
   function playFor(perf) {
     return plays[perf.playID];
-  }
-
-  function amountFor(aPerformance) {
-    return new PerformanceCalculator(aPerformance, playFor(aPerformance))
-      .amount;
-  }
-
-  function volumeCreditsFor(aPerformance) {
-    return new PerformanceCalculator(aPerformance, playFor(aPerformance))
-      .volumeCredits;
   }
 
   function totalAmount(data) {
@@ -66,7 +56,7 @@ class PerformanceCalculator {
         result += 300 * this.performance.audience;
         break;
       default:
-        throw new Error(`알 수 없는 장르: ${this.performance.play.type}`);
+        throw new Error(`알 수 없는 장르: ${this.play.type}`);
     }
     return result;
   }
@@ -76,7 +66,7 @@ class PerformanceCalculator {
     // 포인트를 정립한다.
     result += Math.max(this.performance.audience - 30, 0);
     // 희극 관객 5명마다 추가 포인트를 제공한다.
-    if ("comedy" === this.performance.play.type)
+    if ("comedy" === this.play.type)
       result += Math.floor(this.performance.audience / 5);
 
     return result;
